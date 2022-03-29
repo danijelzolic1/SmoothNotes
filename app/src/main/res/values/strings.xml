@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Smooth Notes</string>
+    <string name="sort_order_title">Title</string>
+    <string name="sort_order_date_created">Created</string>
+    <string name="sort_order_date_changed">Changed</string>
+    <string name="order_type_descending">Descending</string>
+    <string name="order_type_ascending">Ascending</string>
+    <string name="scroll_to_top">Scroll to top</string>
+</resources>

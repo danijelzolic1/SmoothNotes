@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sort_order_title">Titel</string>
+    <string name="sort_order_date_created">Skapad</string>
+    <string name="sort_order_date_changed">Ändrad</string>
+    <string name="scroll_to_top">Scrolla till toppen</string>
+</resources>
