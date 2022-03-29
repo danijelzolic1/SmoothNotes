@@ -2,7 +2,6 @@ package se.zolda.smoothnotes.data.use_case
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import se.zolda.smoothnotes.data.model.InvalidNoteException
 import se.zolda.smoothnotes.data.model.Note
 import se.zolda.smoothnotes.data.repository.NoteRepository
 import se.zolda.smoothnotes.notes.util.NoteOrder
@@ -50,7 +49,6 @@ class UpdateNote(
     private val repository: NoteRepository
 ) {
 
-    @Throws(InvalidNoteException::class)
     suspend operator fun invoke(note: Note) {
         repository.updateNote(note)
     }
@@ -60,7 +58,6 @@ class AddNote(
     private val repository: NoteRepository
 ) {
 
-    @Throws(InvalidNoteException::class)
     suspend operator fun invoke(note: Note) {
         repository.insertNote(note)
     }
@@ -70,13 +67,7 @@ class InsertNotes(
     private val repository: NoteRepository
 ) {
 
-    @Throws(InvalidNoteException::class)
     suspend operator fun invoke(notes: List<Note>) {
-        notes.forEach { note ->
-            if(note.content.isBlank()) {
-                throw InvalidNoteException("The content of the note can't be empty.")
-            }
-        }
         repository.insertNotes(notes)
     }
 }
