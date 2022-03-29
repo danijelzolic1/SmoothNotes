@@ -1,6 +1,5 @@
 package se.zolda.smoothnotes.notes.ui.components
 
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -9,7 +8,6 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -26,7 +24,7 @@ fun NoteTextFieldTitle(
     note: Note,
     onValueChanged: (String) -> Unit
 ) {
-    val title = remember { mutableStateOf(note.title ?: "") }
+    val title = remember { mutableStateOf(note.title) }
     TextField(
         value = title.value,
         onValueChange = {
@@ -45,6 +43,12 @@ fun NoteTextFieldTitle(
             backgroundColor = Color.White.copy(alpha = 0.15f),
             cursorColor = Color_Dark_Text,
         ),
+        placeholder = {
+            Text(
+                text = stringResource(id = R.string.title_info),
+                style = MaterialTheme.typography.body2.copy(color = Color_Dark_Text.copy(alpha = 0.6f))
+            )
+        }
     )
 }
 
@@ -79,5 +83,11 @@ fun NoteTextFieldContent(
             backgroundColor = Color.White.copy(alpha = 0.15f),
             cursorColor = Color_Dark_Text,
         ),
+        placeholder = {
+            Text(
+                text = stringResource(id = R.string.content_info),
+                style = MaterialTheme.typography.body2.copy(color = Color_Dark_Text.copy(alpha = 0.6f))
+            )
+        }
     )
 }

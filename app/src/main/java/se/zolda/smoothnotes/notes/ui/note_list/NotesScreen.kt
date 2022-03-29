@@ -111,12 +111,13 @@ fun NoteList(
             columns = GridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(defaultMargin),
             verticalArrangement = Arrangement.spacedBy(defaultMargin),
-            contentPadding = PaddingValues(bottom = 76.dp, top = 90.dp),
+            contentPadding = PaddingValues(bottom = 76.dp, top = 82.dp),
             modifier = Modifier.padding(horizontal = defaultMargin),
             state = listState
         ) {
             items(items) { note ->
                 NoteListItem(note = note,
+                    noteOrder = state.noteOrder,
                     onClick = {
                         navController.navigate(Screen.WriteNote.getNoteRoute(it.id))
                     })

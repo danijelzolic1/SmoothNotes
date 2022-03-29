@@ -169,7 +169,7 @@ fun DeleteDialog(
         title = {
             Text(
                 text = stringResource(id = R.string.delete_note_dialog_title),
-                style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold)
+                style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold, color = noteColor)
             )
         },
         text = {

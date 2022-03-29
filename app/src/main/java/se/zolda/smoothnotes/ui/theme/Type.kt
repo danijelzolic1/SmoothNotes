@@ -92,7 +92,7 @@ val Typography = Typography(
         letterSpacing = 0.4.sp
     ),
     overline = TextStyle(
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.Normal,
         fontFamily = defaultFontFamily,
         fontSize = 10.sp,
         letterSpacing = 1.5.sp

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Smooth Notes</string>
-    <string name="title">Title</string>
-    <string name="content">Content</string>
+    <string name="title_info">Enter your title here…</string>
+    <string name="content_info">Enter your content here…</string>
     <string name="sort_order_title">Title</string>
     <string name="sort_order_date_created">Created</string>
     <string name="sort_order_date_changed">Changed</string>
@@ -12,4 +12,5 @@
     <string name="delete_note_dialog_desc">Do you really want to delete this note?\nThis action can\'t be undone!</string>
     <string name="delete_note_dialog_dismiss">Dismiss</string>
     <string name="delete_note_dialog_delete">Delete</string>
+    <string name="note">Note</string>
 </resources>

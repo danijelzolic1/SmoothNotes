@@ -8,7 +8,7 @@ import java.util.*
 @Entity(tableName = "notes")
 data class Note(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
-    val title: String?,
+    val title: String,
     val content: String,
     val dateCreated: Calendar,
     val dateChanged: Calendar,

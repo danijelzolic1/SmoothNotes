@@ -10,10 +10,12 @@ import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import se.zolda.smoothnotes.R
 import se.zolda.smoothnotes.notes.util.NoteOrder
 import se.zolda.smoothnotes.notes.util.OrderType
+import se.zolda.smoothnotes.ui.theme.Color_Dark_Text
 import se.zolda.smoothnotes.ui.theme.Color_Unselected
 import se.zolda.smoothnotes.util.midMargin
 import se.zolda.smoothnotes.util.miniMargin
@@ -41,7 +43,9 @@ fun NoteOrderChip(
                 is NoteOrder.DateCreated -> stringResource(id = R.string.sort_order_date_created)
                 is NoteOrder.DateChanged -> stringResource(id = R.string.sort_order_date_changed)
             }.uppercase(),
-            style = MaterialTheme.typography.overline,
+            style = MaterialTheme.typography.overline.copy(
+                fontWeight = FontWeight.Bold
+            ),
             modifier = Modifier.padding(vertical = smallMargin, horizontal = midMargin),
         )
     }

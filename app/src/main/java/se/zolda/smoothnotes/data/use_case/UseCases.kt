@@ -26,7 +26,7 @@ class GetNotes(
             when(noteOrder.orderType) {
                 is OrderType.Ascending -> {
                     when(noteOrder) {
-                        is NoteOrder.Title -> notes.sortedBy { (it.title ?: it.content).lowercase() }
+                        is NoteOrder.Title -> notes.sortedBy { it.title.lowercase() }
                         is NoteOrder.DateCreated -> notes.sortedBy { it.dateCreated }
                         is NoteOrder.DateChanged -> notes.sortedBy { it.dateChanged }
                         else -> notes
@@ -34,7 +34,7 @@ class GetNotes(
                 }
                 is OrderType.Descending -> {
                     when(noteOrder) {
-                        is NoteOrder.Title -> notes.sortedByDescending { (it.title ?: it.content).lowercase() }
+                        is NoteOrder.Title -> notes.sortedByDescending { it.title.lowercase() }
                         is NoteOrder.DateCreated -> notes.sortedByDescending { it.dateCreated }
                         is NoteOrder.DateChanged -> notes.sortedByDescending { it.dateChanged }
                         else -> notes

@@ -45,7 +45,8 @@ class WriteNoteViewModel @Inject constructor(
     fun onNewColorSelected(colorIndex: Int){
         viewModelScope.launch {
             currentNote = currentNote.copy(
-                colorIndex = colorIndex
+                colorIndex = colorIndex,
+                dateChanged = Calendar.getInstance()
             )
             noteUseCases.updateNote(currentNote)
             _state.value = _state.value.copy(state = WriteState.Data(note = currentNote))
@@ -61,7 +62,8 @@ class WriteNoteViewModel @Inject constructor(
     fun onTitleValueChanged(value: String){
         titleChangeJob = viewModelScope.launch {
             currentNote = currentNote.copy(
-                title = value
+                title = value,
+                dateChanged = Calendar.getInstance()
             )
             noteUseCases.updateNote(currentNote)
         }
@@ -76,7 +78,8 @@ class WriteNoteViewModel @Inject constructor(
     fun onContentValueChanged(value: String){
         contentChangeJob = viewModelScope.launch {
             currentNote = currentNote.copy(
-                content = value
+                content = value,
+                dateChanged = Calendar.getInstance()
             )
             noteUseCases.updateNote(currentNote)
         }

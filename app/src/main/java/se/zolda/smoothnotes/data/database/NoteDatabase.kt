@@ -7,7 +7,7 @@ import se.zolda.smoothnotes.data.model.Note
 
 @Database(
     entities = [Note::class],
-    version = 1
+    version = 2
 )
 @TypeConverters(DatabaseConverter::class)
 abstract class NoteDatabase: RoomDatabase() {
