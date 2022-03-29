@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="title">Titel</string>
+    <string name="content">Innehåll</string>
     <string name="sort_order_title">Titel</string>
     <string name="sort_order_date_created">Skapad</string>
     <string name="sort_order_date_changed">Ändrad</string>
     <string name="scroll_to_top">Scrolla till toppen</string>
+    <string name="delete_note_dialog_title">Radera anteckning?</string>
+    <string name="delete_note_dialog_desc">Är du säker på att du vill radera denna anteckning?</string>
+    <string name="delete_note_dialog_dismiss">Ångra</string>
+    <string name="delete_note_dialog_delete">Radera</string>
 </resources>

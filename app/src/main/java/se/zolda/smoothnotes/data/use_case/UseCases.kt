@@ -12,6 +12,7 @@ data class NoteUseCases(
     val getNotes: GetNotes,
     val getNote: GetNote,
     val addNote: AddNote,
+    val updateNote: UpdateNote,
     val insertNotes: InsertNotes,
     val deleteNote: DeleteNote,
     val deleteAllNotes: DeleteAllNotes
@@ -42,6 +43,16 @@ class GetNotes(
                 }
             }
         }
+    }
+}
+
+class UpdateNote(
+    private val repository: NoteRepository
+) {
+
+    @Throws(InvalidNoteException::class)
+    suspend operator fun invoke(note: Note) {
+        repository.updateNote(note)
     }
 }
 
@@ -92,7 +103,7 @@ class GetNote(
     private val repository: NoteRepository
 ) {
 
-    suspend operator fun invoke(id: Long): Note? {
+    suspend operator fun invoke(id: String): Note? {
         return repository.getNoteById(id)
     }
 }

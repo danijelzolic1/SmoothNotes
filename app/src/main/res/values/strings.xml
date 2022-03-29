@@ -1,9 +1,15 @@
 <resources>
-    <string name="app_name">Smooth Notes</string>
+    <string name="app_name" translatable="false">Smooth Notes</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
     <string name="sort_order_title">Title</string>
     <string name="sort_order_date_created">Created</string>
     <string name="sort_order_date_changed">Changed</string>
-    <string name="order_type_descending">Descending</string>
-    <string name="order_type_ascending">Ascending</string>
+    <string name="order_type_descending" translatable="false">Descending</string>
+    <string name="order_type_ascending" translatable="false">Ascending</string>
     <string name="scroll_to_top">Scroll to top</string>
+    <string name="delete_note_dialog_title">Delete note?</string>
+    <string name="delete_note_dialog_desc">Do you really want to delete this note?\nThis action can\'t be undone!</string>
+    <string name="delete_note_dialog_dismiss">Dismiss</string>
+    <string name="delete_note_dialog_delete">Delete</string>
 </resources>

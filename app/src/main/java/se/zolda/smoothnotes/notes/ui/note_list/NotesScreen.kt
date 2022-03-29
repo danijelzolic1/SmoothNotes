@@ -13,6 +13,7 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,6 +29,7 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import se.zolda.smoothnotes.R
 import se.zolda.smoothnotes.navigation.Screen
+import se.zolda.smoothnotes.navigation.SmoothNotesNavigation
 import se.zolda.smoothnotes.notes.ui.components.NoteListItem
 import se.zolda.smoothnotes.notes.util.NoteOrder
 import se.zolda.smoothnotes.notes.util.OrderType
@@ -43,34 +45,47 @@ fun NotesScreen(
     navController: NavController,
     viewModel: NoteListViewModel = hiltViewModel()
 ) {
-    val state by viewModel.state
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = MaterialTheme.colors.background)
-    ) {
-        AnimatedVisibility(
-            visible = state.state is NoteState.Loading,
-            enter = fadeIn(),
-            exit = fadeOut(),
-        ) {
-            LoadingIndicator(modifier = Modifier.fillMaxSize())
-        }
-        AnimatedVisibility(
-            visible = state.state is NoteState.Data,
-            enter = fadeIn(animationSpec = tween(durationMillis = 2000)),
-            exit = fadeOut(animationSpec = tween(durationMillis = 1000)),
-        ) {
-            NoteList(
-                navController = navController,
-                state = state,
-                onSelectionOrder = {
-                    viewModel.saveNoteOrder(it)
-                },
-                onSelectionOrderType = {
-                    viewModel.saveNoteOrderType(it)
+    Scaffold(
+        backgroundColor = MaterialTheme.colors.background,
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate(Screen.WriteNote.getNoteRoute(null))
                 }
-            )
+            ) {
+                Icon(Icons.Filled.Add,"")
+            }
+        }
+    ) {
+        val state by viewModel.state
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = MaterialTheme.colors.background)
+        ) {
+            AnimatedVisibility(
+                visible = state.state is NoteState.Loading,
+                enter = fadeIn(),
+                exit = fadeOut(),
+            ) {
+                LoadingIndicator(modifier = Modifier.fillMaxSize())
+            }
+            AnimatedVisibility(
+                visible = state.state is NoteState.Data,
+                enter = fadeIn(animationSpec = tween(durationMillis = 2000)),
+                exit = fadeOut(animationSpec = tween(durationMillis = 1000)),
+            ) {
+                NoteList(
+                    navController = navController,
+                    state = state,
+                    onSelectionOrder = {
+                        viewModel.saveNoteOrder(it)
+                    },
+                    onSelectionOrderType = {
+                        viewModel.saveNoteOrderType(it)
+                    }
+                )
+            }
         }
     }
 }
@@ -103,7 +118,7 @@ fun NoteList(
             items(items) { note ->
                 NoteListItem(note = note,
                     onClick = {
-                        navController.navigate(Screen.WriteNote.getNoteRoute(it.id.toString()))
+                        navController.navigate(Screen.WriteNote.getNoteRoute(it.id))
                     })
             }
         }
@@ -145,9 +160,9 @@ fun ScrollArrow(
 ) {
     Surface(
         modifier = Modifier
-            .padding(bottom = defaultMargin)
-            .fillMaxSize()
-            .wrapContentSize(align = Alignment.BottomCenter),
+            .padding(top = 72.dp)
+            .fillMaxWidth()
+            .wrapContentSize(align = Alignment.TopCenter),
         shape = CircleShape,
         color = MaterialTheme.colors.primary,
         onClick = onClick

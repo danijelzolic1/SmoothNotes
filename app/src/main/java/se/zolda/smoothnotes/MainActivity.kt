@@ -28,11 +28,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SmoothNotesTheme {
-                Scaffold(
-                    backgroundColor = MaterialTheme.colors.background
-                ) {
-                    SmoothNotesNavigation()
-                }
+                SmoothNotesNavigation()
             }
         }
     }

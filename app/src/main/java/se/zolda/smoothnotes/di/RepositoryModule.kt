@@ -27,6 +27,7 @@ object RepositoryModule {
             getNotes = GetNotes(repository),
             deleteNote = DeleteNote(repository),
             addNote = AddNote(repository),
+            updateNote = UpdateNote(repository),
             insertNotes = InsertNotes(repository),
             getNote = GetNote(repository),
             deleteAllNotes = DeleteAllNotes(repository)

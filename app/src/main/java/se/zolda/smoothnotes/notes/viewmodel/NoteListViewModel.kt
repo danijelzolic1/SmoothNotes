@@ -58,23 +58,6 @@ class NoteListViewModel @Inject constructor(
                     state = NoteState.Data(list),
                     noteOrder = noteOrder
                 )
-                if(list.isEmpty()){
-                    delay(3000)
-                    for(i in 0..10){
-                        val year = Random.nextInt(2018, 2021)
-                        val day = Random.nextInt(1, 365)
-                        val calendar = Calendar.getInstance()
-                        calendar.set(Calendar.YEAR, year)
-                        calendar.set(Calendar.DAY_OF_YEAR, day)
-                        noteUseCases.addNote(Note(
-                            title = "Note Nr $i",
-                            content = "This is the content",
-                            dateCreated = calendar,
-                            dateChanged = calendar,
-                            colorIndex = Note.colors.indices.random()
-                        ))
-                    }
-                }
             }
         }
     }

@@ -7,7 +7,7 @@ import java.util.*
 
 @Entity(tableName = "notes")
 data class Note(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val title: String?,
     val content: String,
     val dateCreated: Calendar,
@@ -25,5 +25,7 @@ data class Note(
         )
     }
 }
+
+
 
 class InvalidNoteException(message: String): Exception(message)

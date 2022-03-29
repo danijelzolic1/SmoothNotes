@@ -10,6 +10,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorPalette = darkColors(
     background = Dark_Background,
+    onBackground = Dark_On_Background,
     primary = Dark_Primary,
     onSurface = Dark_Color_Select_Border
 )
