@@ -76,7 +76,7 @@ fun NoteListItem(
                     ), // You can also change the color and radius of the ripple
                     onClick = { onClick(note) }
                 )
-                .padding(smallMargin)
+                .padding(defaultMargin)
         ){
             when(note.noteType){
                 NoteType.DEFAULT -> DefaultNoteItem(note = note)
@@ -96,7 +96,7 @@ fun TodoNoteItem(
         note.todoContent.forEach { todo ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(smallMargin)
+                horizontalArrangement = Arrangement.spacedBy(defaultMargin)
             ) {
                 Checkbox(
                     checked = todo.isChecked,
@@ -111,7 +111,6 @@ fun TodoNoteItem(
                 )
                 Text(
                     text = todo.content,
-                    color = Color_Dark_Text,
                     style = MaterialTheme.typography.body2.copy(
                         fontWeight = when(todo.isChecked){
                             true -> FontWeight.Normal

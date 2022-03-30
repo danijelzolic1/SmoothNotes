@@ -29,7 +29,6 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import se.zolda.smoothnotes.R
 import se.zolda.smoothnotes.navigation.Screen
-import se.zolda.smoothnotes.navigation.SmoothNotesNavigation
 import se.zolda.smoothnotes.notes.ui.components.NoteListItem
 import se.zolda.smoothnotes.notes.util.NoteOrder
 import se.zolda.smoothnotes.notes.util.OrderType

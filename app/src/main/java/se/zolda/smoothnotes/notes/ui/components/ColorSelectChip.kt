@@ -5,6 +5,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -18,11 +19,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import se.zolda.smoothnotes.data.model.Note
 import se.zolda.smoothnotes.data.model.NoteType
 import se.zolda.smoothnotes.ui.theme.Color_Separator
+import se.zolda.smoothnotes.ui.theme.Dark_Background
 import se.zolda.smoothnotes.util.defaultMargin
 import se.zolda.smoothnotes.util.largeMargin
 import se.zolda.smoothnotes.util.miniMargin
@@ -38,6 +41,7 @@ fun ColorSelectGroup(
             .fillMaxWidth()
             .wrapContentSize(align = Alignment.Center)
             .padding(top = smallMargin)
+            .shadow(elevation = 4.dp, shape = CircleShape)
             .clip(CircleShape)
             .background(color = MaterialTheme.colors.background),
         horizontalArrangement = Arrangement.spacedBy(defaultMargin),
@@ -66,7 +70,7 @@ fun ColorSelectGroup(
                         modifier = Modifier
                             .size(12.dp)
                             .clip(CircleShape)
-                            .background(MaterialTheme.colors.background)
+                            .background(Dark_Background)
                             .align(Alignment.Center)
                     )
                 }
@@ -81,12 +85,13 @@ fun WriteNoteActionGroup(
     onToggleType: () -> Unit,
     onDeleteNote: () -> Unit,
 ) {
-    val noteColor = Note.colors[note.colorIndex]
+    val noteColor = if(isSystemInDarkTheme()) Note.colors[note.colorIndex] else Dark_Background
     Row(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(align = Alignment.BottomCenter)
             .padding(bottom = smallMargin)
+            .shadow(elevation = 4.dp, shape = CircleShape)
             .clip(CircleShape)
             .background(color = MaterialTheme.colors.background),
         horizontalArrangement = Arrangement.spacedBy(smallMargin),

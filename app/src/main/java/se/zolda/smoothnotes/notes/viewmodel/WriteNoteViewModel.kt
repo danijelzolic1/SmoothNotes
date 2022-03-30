@@ -1,6 +1,5 @@
 package se.zolda.smoothnotes.notes.viewmodel
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -12,8 +11,6 @@ import se.zolda.smoothnotes.data.model.Note
 import se.zolda.smoothnotes.data.model.NoteTodo
 import se.zolda.smoothnotes.data.model.NoteType
 import se.zolda.smoothnotes.data.use_case.NoteUseCases
-import se.zolda.smoothnotes.extensions.isLastCharNewLine
-import se.zolda.smoothnotes.extensions.isNewLine
 import se.zolda.smoothnotes.notes.ui.new_note.WriteNoteData
 import se.zolda.smoothnotes.notes.ui.new_note.WriteState
 import java.util.*

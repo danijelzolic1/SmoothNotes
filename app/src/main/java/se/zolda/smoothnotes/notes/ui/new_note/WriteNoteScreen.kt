@@ -189,7 +189,7 @@ fun DeleteDialog(
                 ClickableText(
                     text = AnnotatedString(stringResource(id = R.string.delete_note_dialog_dismiss).uppercase()),
                     style = MaterialTheme.typography.overline.copy(
-                        color = noteColor,
+                        color = Color_Dark_Text,
                         fontWeight = FontWeight.Bold
                     ),
                     onClick = {
@@ -201,12 +201,12 @@ fun DeleteDialog(
                     onClick = {
                         onConfirm()
                     },
-                    colors = ButtonDefaults.buttonColors(backgroundColor = noteColor)
+                    colors = ButtonDefaults.buttonColors(backgroundColor = Color_Dark_Text)
                 ) {
                     Text(
                         text = stringResource(id = R.string.delete_note_dialog_delete).uppercase(),
                         style = MaterialTheme.typography.overline.copy(
-                            color = Color_Dark_Text,
+                            color = noteColor,
                             fontWeight = FontWeight.Bold
                         ),
                     )
@@ -216,16 +216,16 @@ fun DeleteDialog(
         title = {
             Text(
                 text = title,
-                style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold, color = noteColor)
+                style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold, color = Color_Dark_Text)
             )
         },
         text = {
             Text(
                 text = content,
-                style = MaterialTheme.typography.body2
+                style = MaterialTheme.typography.body2.copy(color = Color_Dark_Text)
             )
         },
-        backgroundColor = MaterialTheme.colors.background
+        backgroundColor = noteColor
     )
 
 }

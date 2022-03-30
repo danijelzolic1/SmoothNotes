@@ -157,7 +157,7 @@ fun NoteTodoFieldContent(
                     Icon(
                         imageVector = Icons.Outlined.RemoveCircleOutline,
                         contentDescription = "",
-                        tint = Color_Todo_Checked_Text
+                        tint = Color_Dark_Text
                     )
                 }
             }

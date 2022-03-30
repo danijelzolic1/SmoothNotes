@@ -6,17 +6,23 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val DarkColorPalette = darkColors(
     background = Dark_Background,
     onBackground = Dark_On_Background,
     primary = Dark_Primary,
-    onSurface = Dark_Color_Select_Border
+    secondary = Dark_Primary,
+    primaryVariant = Dark_Color_Unselected
 )
 
 private val LightColorPalette = lightColors(
-    background = Light_Background
+    background = Light_Background,
+    onBackground = Light_On_Background,
+    primary = Light_Primary,
+    secondary = Light_Primary,
+    primaryVariant = Light_Color_Unselected
 
     /* Other default colors to override
     background = Color.White,
@@ -37,9 +43,11 @@ fun SmoothNotesTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Compo
     }
 
     val systemUiController = rememberSystemUiController()
-    val useDarkIcons = !MaterialTheme.colors.isLight
     SideEffect {
-        systemUiController.setSystemBarsColor(colors.background, darkIcons = useDarkIcons)
+        systemUiController.setSystemBarsColor(
+            color = colors.background,
+            darkIcons = !darkTheme
+        )
     }
 
     MaterialTheme(

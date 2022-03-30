@@ -32,7 +32,7 @@ fun NoteOrderChip(
     Surface(
         shape =
             shape,
-        color = if (isSelected) MaterialTheme.colors.primary else Color_Unselected,
+        color = if (isSelected) MaterialTheme.colors.primary else MaterialTheme.colors.primaryVariant,
         onClick = {
             onSelectionChanged(noteOrder)
         }
