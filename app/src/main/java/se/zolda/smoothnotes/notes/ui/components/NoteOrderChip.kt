@@ -15,8 +15,6 @@ import androidx.compose.ui.unit.dp
 import se.zolda.smoothnotes.R
 import se.zolda.smoothnotes.notes.util.NoteOrder
 import se.zolda.smoothnotes.notes.util.OrderType
-import se.zolda.smoothnotes.ui.theme.Color_Dark_Text
-import se.zolda.smoothnotes.ui.theme.Color_Unselected
 import se.zolda.smoothnotes.ui.theme.Dark_On_Background
 import se.zolda.smoothnotes.util.midMargin
 import se.zolda.smoothnotes.util.miniMargin
