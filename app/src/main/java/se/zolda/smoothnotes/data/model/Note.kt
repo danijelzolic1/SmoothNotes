@@ -8,11 +8,13 @@ import java.util.*
 @Entity(tableName = "notes")
 data class Note(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
-    val title: String,
-    val content: String,
+    val title: String = "",
+    val textContent: String = "",
+    val todoContent: List<NoteTodo> = listOf(),
     val dateCreated: Calendar,
     val dateChanged: Calendar,
-    val colorIndex: Int = 0
+    val colorIndex: Int = 0,
+    val noteType: NoteType = NoteType.DEFAULT
 ){
     companion object{
         val colors = listOf(
@@ -24,4 +26,14 @@ data class Note(
             Color_Note_Yellow,
         )
     }
+}
+
+data class NoteTodo(
+    val id: String = UUID.randomUUID().toString(),
+    val content: String = "",
+    val isChecked: Boolean = false
+)
+
+enum class NoteType{
+    DEFAULT, TODO
 }

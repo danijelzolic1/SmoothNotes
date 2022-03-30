@@ -9,6 +9,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import se.zolda.smoothnotes.data.model.Note
+import se.zolda.smoothnotes.data.model.NoteTodo
+import se.zolda.smoothnotes.data.model.NoteType
 import se.zolda.smoothnotes.data.use_case.NoteUseCases
 import se.zolda.smoothnotes.extensions.isLastCharNewLine
 import se.zolda.smoothnotes.extensions.isNewLine
@@ -78,10 +80,65 @@ class WriteNoteViewModel @Inject constructor(
     fun onContentValueChanged(value: String){
         contentChangeJob = viewModelScope.launch {
             currentNote = currentNote.copy(
-                content = value,
+                textContent = value,
                 dateChanged = Calendar.getInstance()
             )
             noteUseCases.updateNote(currentNote)
+        }
+    }
+
+    fun onTodoChecked(noteTodo: NoteTodo, isChecked: Boolean){
+        viewModelScope.launch {
+            currentNote.todoContent.toMutableList().let { mutableList ->
+                mutableList.find { it.id == noteTodo.id }?.let { todo ->
+                    mutableList[mutableList.indexOf(todo)] = todo.copy(
+                        isChecked = isChecked
+                    )
+
+                    currentNote = currentNote.copy(
+                        todoContent = mutableList,
+                        dateChanged = Calendar.getInstance()
+                    )
+                    noteUseCases.updateNote(currentNote)
+                }
+            }
+        }
+    }
+
+    fun onTodoContentChange(noteTodo: NoteTodo, content: String){
+        viewModelScope.launch {
+            currentNote.todoContent.toMutableList().let { mutableList ->
+                mutableList.find { it.id == noteTodo.id }?.let { todo ->
+                    mutableList[mutableList.indexOf(todo)] = todo.copy(
+                        content = content
+                    )
+
+                    currentNote = currentNote.copy(
+                        todoContent = mutableList,
+                        dateChanged = Calendar.getInstance()
+                    )
+                    noteUseCases.updateNote(currentNote)
+                }
+            }
+        }
+    }
+
+    fun onToggleNoteType(){
+        viewModelScope.launch {
+            currentNote = currentNote.copy(
+                textContent = "",
+                todoContent = listOf(
+                    NoteTodo(),
+                    NoteTodo(),
+                    NoteTodo()
+                ),
+                noteType = when(currentNote.noteType){
+                    NoteType.DEFAULT -> NoteType.TODO
+                    else -> NoteType.DEFAULT
+                }
+            )
+            noteUseCases.updateNote(currentNote)
+            _state.value = _state.value.copy(state = WriteState.Data(note = currentNote))
         }
     }
 
@@ -92,8 +149,6 @@ class WriteNoteViewModel @Inject constructor(
     private suspend fun createNewNote() {
         val calendar = Calendar.getInstance()
         val note = Note(
-            title = "",
-            content = "",
             dateCreated = calendar,
             dateChanged = calendar,
             colorIndex = Note.colors.indices.random()

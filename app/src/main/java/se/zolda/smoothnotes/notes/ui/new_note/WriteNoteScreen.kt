@@ -27,11 +27,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import se.zolda.smoothnotes.R
 import se.zolda.smoothnotes.data.model.Note
+import se.zolda.smoothnotes.data.model.NoteType
 import se.zolda.smoothnotes.navigation.Screen
-import se.zolda.smoothnotes.notes.ui.components.ColorSelectGroup
-import se.zolda.smoothnotes.notes.ui.components.NoteTextFieldContent
-import se.zolda.smoothnotes.notes.ui.components.NoteTextFieldTitle
-import se.zolda.smoothnotes.notes.ui.components.WriteNoteActionGroup
+import se.zolda.smoothnotes.notes.ui.components.*
 import se.zolda.smoothnotes.notes.viewmodel.WriteNoteViewModel
 import se.zolda.smoothnotes.ui.theme.Color_Dark_Text
 import se.zolda.smoothnotes.ui.theme.Color_Red
@@ -82,7 +80,7 @@ fun WriteNoteScreen(
                     onValueChanged = {
                         viewModel.onTitleValueChanged(it)
                     })
-                NoteTextFieldContent(
+                if(note.noteType == NoteType.DEFAULT) NoteTextFieldContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = defaultMargin, bottom = 68.dp)
@@ -97,11 +95,26 @@ fun WriteNoteScreen(
                         viewModel.onContentValueChanged(it)
                     },
                 )
+                if(note.noteType == NoteType.TODO) NoteTodoFieldContent(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = defaultMargin, bottom = 68.dp),
+                    note = note,
+                    onChecked = { todo, checked ->
+                        viewModel.onTodoChecked(todo, checked)
+                    },
+                    onContentChanged = { todo, content ->
+                        viewModel.onTodoContentChange(todo, content)
+                    },
+                    onNewTodo = {
+
+                    }
+                )
             }
             WriteNoteActionGroup(
-                noteColor = noteColor,
-                onAddTodo = {
-
+                note = note,
+                onToggleType = {
+                    viewModel.onToggleNoteType()
                 },
                 onDeleteNote = {
                     showDialog = true

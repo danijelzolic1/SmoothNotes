@@ -13,9 +13,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CheckBox
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.DeleteForever
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import se.zolda.smoothnotes.data.model.Note
+import se.zolda.smoothnotes.data.model.NoteType
 import se.zolda.smoothnotes.ui.theme.Color_Separator
 import se.zolda.smoothnotes.util.defaultMargin
 import se.zolda.smoothnotes.util.largeMargin
@@ -78,10 +77,11 @@ fun ColorSelectGroup(
 
 @Composable
 fun WriteNoteActionGroup(
-    noteColor: Color,
-    onAddTodo: () -> Unit,
+    note: Note,
+    onToggleType: () -> Unit,
     onDeleteNote: () -> Unit,
 ) {
+    val noteColor = Note.colors[note.colorIndex]
     Row(
         modifier = Modifier
             .fillMaxSize()
@@ -96,9 +96,12 @@ fun WriteNoteActionGroup(
             modifier = Modifier
                 .width(miniMargin)
         )
-        IconButton(onClick = { onAddTodo() }) {
+        IconButton(onClick = { onToggleType() }) {
             Icon(
-                imageVector = Icons.Filled.CheckBox,
+                imageVector = when (note.noteType) {
+                    NoteType.TODO -> Icons.Filled.EditNote
+                    else -> Icons.Filled.CheckBox
+                },
                 contentDescription = "",
                 Modifier.size(28.dp),
                 tint = noteColor
