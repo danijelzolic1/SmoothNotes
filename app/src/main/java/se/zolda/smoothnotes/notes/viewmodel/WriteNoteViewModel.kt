@@ -105,6 +105,42 @@ class WriteNoteViewModel @Inject constructor(
         }
     }
 
+    fun onDeleteTodo(noteTodo: NoteTodo){
+        viewModelScope.launch {
+            currentNote.todoContent.toMutableList().let { mutableList ->
+                mutableList.removeIf { it.id == noteTodo.id }
+                currentNote = currentNote.copy(
+                    todoContent = mutableList,
+                    dateChanged = Calendar.getInstance()
+                )
+                noteUseCases.updateNote(currentNote)
+                _state.value = _state.value.copy(state = WriteState.Data(note = currentNote))
+            }
+        }
+    }
+
+    fun onNewTodo(noteTodo: NoteTodo?){
+        viewModelScope.launch {
+            currentNote.todoContent.toMutableList().let { mutableList ->
+                noteTodo?.let {
+                    mutableList.find { it.id == noteTodo.id }?.let { todo ->
+                        mutableList.add(
+                            index = mutableList.indexOf(todo) + 1,
+                            element = NoteTodo()
+                        )
+                    } ?: mutableList.add(NoteTodo())
+                } ?: mutableList.add(NoteTodo())
+
+                currentNote = currentNote.copy(
+                    todoContent = mutableList,
+                    dateChanged = Calendar.getInstance()
+                )
+                noteUseCases.updateNote(currentNote)
+                _state.value = _state.value.copy(state = WriteState.Data(note = currentNote))
+            }
+        }
+    }
+
     fun onTodoContentChange(noteTodo: NoteTodo, content: String){
         viewModelScope.launch {
             currentNote.todoContent.toMutableList().let { mutableList ->
@@ -126,16 +162,20 @@ class WriteNoteViewModel @Inject constructor(
     fun onToggleNoteType(){
         viewModelScope.launch {
             currentNote = currentNote.copy(
-                textContent = "",
-                todoContent = listOf(
-                    NoteTodo(),
-                    NoteTodo(),
-                    NoteTodo()
-                ),
                 noteType = when(currentNote.noteType){
                     NoteType.DEFAULT -> NoteType.TODO
                     else -> NoteType.DEFAULT
                 }
+            )
+            noteUseCases.updateNote(currentNote)
+            _state.value = _state.value.copy(state = WriteState.Data(note = currentNote))
+        }
+    }
+
+    fun deleteAllTodos(){
+        viewModelScope.launch {
+            currentNote = currentNote.copy(
+                todoContent = listOf()
             )
             noteUseCases.updateNote(currentNote)
             _state.value = _state.value.copy(state = WriteState.Data(note = currentNote))

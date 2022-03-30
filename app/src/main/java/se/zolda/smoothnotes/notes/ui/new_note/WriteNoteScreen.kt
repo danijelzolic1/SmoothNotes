@@ -9,9 +9,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,12 +24,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import se.zolda.smoothnotes.R
 import se.zolda.smoothnotes.data.model.Note
+import se.zolda.smoothnotes.data.model.NoteTodo
 import se.zolda.smoothnotes.data.model.NoteType
-import se.zolda.smoothnotes.navigation.Screen
 import se.zolda.smoothnotes.notes.ui.components.*
 import se.zolda.smoothnotes.notes.viewmodel.WriteNoteViewModel
 import se.zolda.smoothnotes.ui.theme.Color_Dark_Text
-import se.zolda.smoothnotes.ui.theme.Color_Red
 import se.zolda.smoothnotes.util.defaultMargin
 import se.zolda.smoothnotes.util.largeMargin
 import se.zolda.smoothnotes.util.smallMargin
@@ -44,7 +40,9 @@ fun WriteNoteScreen(
 ) {
     val scope = rememberCoroutineScope()
     val state = viewModel.state.value
-    var showDialog by remember { mutableStateOf(false) }
+    var showDeleteNoteDialog by remember { mutableStateOf(false) }
+    var showDeleteAllTodosDialog by remember { mutableStateOf(false) }
+    var showDeleteTodoDialog by remember { mutableStateOf(Pair<Boolean, NoteTodo?>(false, null)) }
     /*val animatedColor = animateColorAsState(
         targetValue = if (state.state is WriteState.Data) Note.colors[state.state.note.colorIndex] else Color.Transparent,
         animationSpec = tween(durationMillis = 800)
@@ -107,7 +105,13 @@ fun WriteNoteScreen(
                         viewModel.onTodoContentChange(todo, content)
                     },
                     onNewTodo = {
-
+                        viewModel.onNewTodo(it)
+                    },
+                    onDelete = {
+                        showDeleteTodoDialog = Pair(true, it)
+                    },
+                    onDeleteAll = {
+                        showDeleteAllTodosDialog = true
                     }
                 )
             }
@@ -117,17 +121,45 @@ fun WriteNoteScreen(
                     viewModel.onToggleNoteType()
                 },
                 onDeleteNote = {
-                    showDialog = true
+                    showDeleteNoteDialog = true
                 })
-            if(showDialog) DeleteDialog(
+            if(showDeleteAllTodosDialog || showDeleteNoteDialog || showDeleteTodoDialog.first) DeleteDialog(
+                title = stringResource(
+                    id = when {
+                        showDeleteNoteDialog -> R.string.delete_note_dialog_title
+                        showDeleteAllTodosDialog -> R.string.delete_all_todos_title
+                        else -> R.string.delete_todo_dialog_title
+                    }
+                ),
+                content = when {
+                    showDeleteNoteDialog -> stringResource(R.string.delete_note_dialog_desc)
+                    showDeleteAllTodosDialog -> stringResource(R.string.delete_all_todos_desc)
+                    else -> showDeleteTodoDialog.second?.content ?: ""
+                },
                 noteColor = noteColor,
                 onConfirm = {
-                    showDialog = false
-                    viewModel.deleteNote()
-                    navController.navigateUp()
+                    when {
+                        showDeleteNoteDialog -> {
+                            showDeleteNoteDialog = false
+                            viewModel.deleteNote()
+                            navController.navigateUp()
+                        }
+                        showDeleteAllTodosDialog -> {
+                            showDeleteAllTodosDialog = false
+                            viewModel.deleteAllTodos()
+                        }
+                        else -> {
+                            showDeleteTodoDialog.second?.let { viewModel.onDeleteTodo(it) }
+                            showDeleteTodoDialog = Pair(false, null)
+                        }
+                    }
                 },
                 onDismiss = {
-                    showDialog = false
+                    when {
+                        showDeleteNoteDialog -> showDeleteNoteDialog = false
+                        showDeleteAllTodosDialog -> showDeleteAllTodosDialog = false
+                        else -> showDeleteTodoDialog = Pair(false, null)
+                    }
                 }
             )
         }
@@ -136,6 +168,8 @@ fun WriteNoteScreen(
 
 @Composable
 fun DeleteDialog(
+    title: String,
+    content: String,
     noteColor: Color,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
@@ -181,13 +215,13 @@ fun DeleteDialog(
         },
         title = {
             Text(
-                text = stringResource(id = R.string.delete_note_dialog_title),
+                text = title,
                 style = MaterialTheme.typography.subtitle1.copy(fontWeight = FontWeight.Bold, color = noteColor)
             )
         },
         text = {
             Text(
-                text = stringResource(id = R.string.delete_note_dialog_desc),
+                text = content,
                 style = MaterialTheme.typography.body2
             )
         },

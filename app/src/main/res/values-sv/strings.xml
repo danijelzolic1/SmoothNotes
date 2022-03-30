@@ -11,4 +11,10 @@
     <string name="delete_note_dialog_dismiss">Ångra</string>
     <string name="delete_note_dialog_delete">Radera</string>
     <string name="note">Anteckning</string>
+
+    <string name="delete_todo_dialog_title">Radera detta ärende?</string>
+    <string name="add_todo">Lägg till ärende</string>
+    <string name="delete_all_todos">Radera alla ärenden</string>
+    <string name="delete_all_todos_title">Radera alla ärenden?</string>
+    <string name="delete_all_todos_desc">Är du säker på att du vill radera alla dina ärenden för denna anteckning?</string>
 </resources>

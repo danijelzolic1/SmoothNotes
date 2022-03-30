@@ -13,4 +13,10 @@
     <string name="delete_note_dialog_dismiss">Dismiss</string>
     <string name="delete_note_dialog_delete">Delete</string>
     <string name="note">Note</string>
+
+    <string name="delete_todo_dialog_title">Delete errand?</string>
+    <string name="add_todo">Add To-Do</string>
+    <string name="delete_all_todos">Delete all To-Do\'s</string>
+    <string name="delete_all_todos_title">Delete all To-Do\'s?</string>
+    <string name="delete_all_todos_desc">Do you really want to delete all To-Do\'s for this note?</string>
 </resources>
