@@ -12,7 +12,7 @@ val Dark_Color_Unselected = Color(0xFF404040)
 val Light_Background = Color(0xFFF7F7FF)
 val Light_On_Background = Color(0xFF222222)
 val Light_Primary = Color(0xFF3FA7D6)
-val Light_Color_Unselected = Color(0xFF808080)
+val Light_Color_Unselected = Color(0xFF999999)
 
 //General
 val Color_Dark_Text = Color(0xFF202020)
