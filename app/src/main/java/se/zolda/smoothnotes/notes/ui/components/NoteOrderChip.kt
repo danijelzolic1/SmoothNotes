@@ -17,6 +17,7 @@ import se.zolda.smoothnotes.notes.util.NoteOrder
 import se.zolda.smoothnotes.notes.util.OrderType
 import se.zolda.smoothnotes.ui.theme.Color_Dark_Text
 import se.zolda.smoothnotes.ui.theme.Color_Unselected
+import se.zolda.smoothnotes.ui.theme.Dark_On_Background
 import se.zolda.smoothnotes.util.midMargin
 import se.zolda.smoothnotes.util.miniMargin
 import se.zolda.smoothnotes.util.smallMargin
@@ -44,7 +45,8 @@ fun NoteOrderChip(
                 is NoteOrder.DateChanged -> stringResource(id = R.string.sort_order_date_changed)
             }.uppercase(),
             style = MaterialTheme.typography.overline.copy(
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = if (isSelected) MaterialTheme.colors.onPrimary else Dark_On_Background
             ),
             modifier = Modifier.padding(vertical = smallMargin, horizontal = midMargin),
         )

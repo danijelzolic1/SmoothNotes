@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Checkbox
 import androidx.compose.material.CheckboxDefaults
@@ -14,6 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -38,7 +43,6 @@ fun NoteListItem(
     noteOrder: NoteOrder,
     onClick: (Note) -> Unit,
 ) {
-    val shape = RoundedCornerShape(smallMargin)
     Column {
         Text(
             modifier = Modifier
@@ -60,40 +64,40 @@ fun NoteListItem(
             style = MaterialTheme.typography.overline
         )
         Spacer(modifier = Modifier.height(smallMargin))
-        Column(
-            modifier = Modifier
-                .height(200.dp)
-                .fillMaxWidth()
-                .background(
-                    color = Note.colors[note.colorIndex],
-                    shape = shape
-                )
-                .clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = rememberRipple(
-                        bounded = true,
-                        color = Color.Black
-                    ), // You can also change the color and radius of the ripple
-                    onClick = { onClick(note) }
-                )
-                .padding(defaultMargin)
-        ){
-            when(note.noteType){
-                NoteType.DEFAULT -> DefaultNoteItem(note = note)
-                NoteType.TODO -> TodoNoteItem(note = note)
-            }
+        when (note.noteType) {
+            NoteType.DEFAULT -> DefaultNoteItem(note = note, onClick = onClick)
+            NoteType.TODO -> TodoNoteItem(note = note, onClick = onClick)
         }
     }
 }
 
 @Composable
 fun TodoNoteItem(
-    note: Note
-){
-    Column(
-        verticalArrangement = Arrangement.spacedBy(defaultMargin)
-    ){
-        note.todoContent.forEach { todo ->
+    note: Note,
+    onClick: (Note) -> Unit,
+) {
+    val shape = RoundedCornerShape(smallMargin)
+    LazyColumn(
+        verticalArrangement = Arrangement.spacedBy(defaultMargin),
+        modifier = Modifier
+            .shadow(elevation = 2.dp, shape = shape)
+            .height(200.dp)
+            .fillMaxWidth()
+            .background(
+                color = Note.colors[note.colorIndex],
+                shape = shape
+            )
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = rememberRipple(
+                    bounded = true,
+                    color = Color.Black
+                ), // You can also change the color and radius of the ripple
+                onClick = { onClick(note) }
+            )
+            .padding(defaultMargin)
+    ) {
+        items(note.todoContent) { todo ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(defaultMargin)
@@ -107,20 +111,20 @@ fun TodoNoteItem(
                     ),
                     enabled = false,
                     onCheckedChange = {},
-                    modifier = Modifier.size(18.dp)
+                    modifier = Modifier.size(20.dp)
                 )
                 Text(
                     text = todo.content,
                     style = MaterialTheme.typography.body2.copy(
-                        fontWeight = when(todo.isChecked){
+                        fontWeight = when (todo.isChecked) {
                             true -> FontWeight.Normal
                             else -> FontWeight.Medium
                         },
-                        textDecoration = when(todo.isChecked){
+                        textDecoration = when (todo.isChecked) {
                             true -> TextDecoration.LineThrough
                             else -> TextDecoration.None
                         },
-                        color = when(todo.isChecked){
+                        color = when (todo.isChecked) {
                             true -> Color_Todo_Checked_Text
                             else -> Color_Dark_Text
                         }
@@ -135,11 +139,32 @@ fun TodoNoteItem(
 
 @Composable
 fun DefaultNoteItem(
-    note: Note
-){
-    Text(
-        text = note.textContent,
-        color = Color_Dark_Text,
-        style = MaterialTheme.typography.body2.copy(fontWeight = FontWeight.Medium)
-    )
+    note: Note,
+    onClick: (Note) -> Unit,
+) {
+    val shape = RoundedCornerShape(smallMargin)
+    Box(modifier = Modifier
+        .shadow(elevation = 2.dp, shape = shape)
+        .height(200.dp)
+        .fillMaxWidth()
+        .background(
+            color = Note.colors[note.colorIndex],
+            shape = shape
+        )
+        .clickable(
+            interactionSource = remember { MutableInteractionSource() },
+            indication = rememberRipple(
+                bounded = true,
+                color = Color.Black
+            ), // You can also change the color and radius of the ripple
+            onClick = { onClick(note) }
+        )
+        .padding(defaultMargin)
+    ) {
+        Text(
+            text = note.textContent,
+            color = Color_Dark_Text,
+            style = MaterialTheme.typography.body2.copy(fontWeight = FontWeight.Medium)
+        )
+    }
 }
